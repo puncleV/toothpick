@@ -36,7 +36,7 @@ export function createRequestRouter({routes}: ICreateRouterParams): Router {
 
       const controllerInstance = scopedContainer.resolve(controller);
       const controllerAction = Reflect.get(controllerInstance, action);
-      await controllerAction.call(controllerInstance);
+      await controllerAction.call(controllerInstance, ctx);
     });
   });
 

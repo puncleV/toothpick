@@ -12,6 +12,7 @@ export const createServer = (container: AwilixContainer) => {
 
   application.use(middleware.errorHandler());
   application.use(middleware.requestScopedContainer({container}));
+  application.use(middleware.registerLogger());
   application.use(middleware.requestLogger());
   application.use(bodyParser());
 
