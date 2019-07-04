@@ -1,0 +1,6 @@
+*
+!src
+!typings
+!tsconfig.json
+!package.json
+!yarn.lock

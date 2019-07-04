@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    ".git",
+    "build",
+    "node_modules"
+  ],
+  "ext": "ts",
+  "env": {
+    "TS_NODE_TRANSPILE_ONLY": true,
+    "TS_NODE_CACHE": false
+  },
+  "exec": "./node_modules/.bin/ts-node ./src/api.ts",
+  "delay": "1000"
+}

@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  rest-api:
+    build: .
+    ports:
+      - 1337:1337
+    volumes:
+      - ./config:/opt/app/config

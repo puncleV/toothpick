@@ -1,0 +1,6 @@
+--require source-map-support/register
+--require ./test/ts-node-env.ts
+--require ts-node/register
+--timeout 10000
+--watch-extensions ts
+test/bootstrap.ts test/**/*.test.ts
