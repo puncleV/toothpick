@@ -8,6 +8,11 @@ services:
     volumes:
       - ./config:/opt/app/config
   database:
+    restart: always
+    environment:
+      - POSTGRES_USER=api
+      - POSTGRES_PASSWORD=apipassword
+      - POSTGRES_DB=toothpick
     image: postgres
     ports:
       - 5432:5432
