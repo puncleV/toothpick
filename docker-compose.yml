@@ -2,18 +2,20 @@ version: "3"
 
 services:
   rest-api:
+    container_name: toothpick_api
     build: .
     ports:
       - 1337:1337
     volumes:
       - ./config:/opt/app/config
   database:
+    container_name: toothpick_db
+    build: ./database
     restart: always
     environment:
       - POSTGRES_USER=api
       - POSTGRES_PASSWORD=apipassword
       - POSTGRES_DB=toothpick
-    image: postgres
     ports:
       - 5432:5432
     volumes:
