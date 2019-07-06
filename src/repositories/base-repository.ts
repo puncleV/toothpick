@@ -3,16 +3,15 @@ import uuid from "uuid";
 import {sql} from "../adapters";
 import * as types from "../types";
 
-export interface IAbstractRepositoryDependencies {
-  sqlConnection: sql.SqlConnection
-
+export interface IBaseRepositoryDependencies {
+  sqlConnection: sql.SqlConnection;
 }
 
 export class BaseRepository <T extends {id: string}> {
   protected sqlConnection: sql.SqlConnection;
   protected entity: string;
 
-  constructor(dependencies: IAbstractRepositoryDependencies, entity: string) {
+  constructor(dependencies: IBaseRepositoryDependencies, entity: string) {
     this.sqlConnection = dependencies.sqlConnection;
     this.entity = entity;
   }
