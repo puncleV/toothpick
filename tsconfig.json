@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "lib": [
       "esnext"
     ],
