@@ -1,0 +1,10 @@
+{
+  "database": {
+    "host": "localhost",
+    "user": "api",
+    "password": "apipassword",
+    "database": "toothpick",
+    "timezone": "UTC",
+    "connectionLimit": 100
+  }
+}
