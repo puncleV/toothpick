@@ -3,14 +3,14 @@ import {expect} from "chai";
 
 import {database} from "../../../../../configs/config.json";
 import {logger} from "../../../../../src/logger";
-import {SqlConnection} from "../../../../../src/repositories/adapters/sql/sql-connection";
+import {sql} from "../../../../../src/repositories";
 
 describe.only("SqlConnection", () => {
   describe("integration", () => {
-    let sqlBuilder: SqlConnection;
+    let sqlBuilder: sql.SqlConnection;
 
     beforeEach(() => {
-      sqlBuilder = new SqlConnection({
+      sqlBuilder = new sql.SqlConnection({
         logger: logger.child(true),
         config: database,
       });
