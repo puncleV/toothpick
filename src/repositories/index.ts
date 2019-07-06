@@ -1,2 +1,2 @@
 export * from "./base-repository";
-export * from "./types";
+export * from "./interfaces";

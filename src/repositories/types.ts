@@ -1,5 +1,6 @@
-export interface ICustomer {
-  id: string;
-  name: string;
-  email: string;
+export enum CustomerOrderStatus {
+  PENDING = "pending",
+  PREPARING = "preparing",
+  TRANSIT = "transit",
+  DELIVERED = "delivered",
 }
