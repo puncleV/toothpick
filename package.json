@@ -46,12 +46,14 @@
   },
   "dependencies": {
     "awilix": "4.2.2",
+    "knex": "0.18.3",
     "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
     "koa-compose": "4.1.0",
     "koa-router": "7.4.0",
     "nock": "10.0.6",
     "oddlog": "3.0.1",
+    "pg": "7.11.0",
     "source-map-support": "0.5.9",
     "uuid": "3.3.2"
   },
