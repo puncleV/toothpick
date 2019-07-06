@@ -11,13 +11,13 @@ CREATE TABLE IF NOT EXISTS pizza_size (
 CREATE TABLE IF NOT EXISTS pizza (
    id UUID PRIMARY KEY,
    name VARCHAR(25) NOT NULL,
-   pizzaSize UUID NOT NULL,
-   pizzaBase UUID NOT NULL,
+   size UUID NOT NULL,
+   base UUID NOT NULL,
    description VARCHAR(255),
-   CONSTRAINT pizza_pizza_size FOREIGN KEY (pizzaSize)
+   CONSTRAINT pizza_pizza_size FOREIGN KEY (size)
     REFERENCES pizza_size (id)
     ON UPDATE CASCADE ON DELETE RESTRICT,
-   CONSTRAINT pizza_pizza_base FOREIGN KEY (pizzaBase)
+   CONSTRAINT pizza_pizza_base FOREIGN KEY (base)
     REFERENCES pizza_base (id)
     ON UPDATE CASCADE ON DELETE RESTRICT
 );
