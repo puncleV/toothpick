@@ -1,22 +1,24 @@
 CREATE TABLE IF NOT EXISTS pizza_base (
-   name VARCHAR(25) PRIMARY KEY
+   id UUID PRIMARY KEY,
+   name VARCHAR(25) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS pizza_size (
-   name VARCHAR(25) PRIMARY KEY NOT NULL
+   id UUID PRIMARY KEY,
+   name VARCHAR(25) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS pizza (
    id UUID PRIMARY KEY,
    name VARCHAR(25) NOT NULL,
-   pizza_size VARCHAR(25) NOT NULL,
-   pizza_base VARCHAR(25) NOT NULL,
+   pizza_size UUID NOT NULL,
+   pizza_base UUID NOT NULL,
    description VARCHAR(255),
    CONSTRAINT pizza_pizza_size FOREIGN KEY (pizza_size)
-    REFERENCES pizza_size (name)
+    REFERENCES pizza_size (id)
     ON UPDATE CASCADE ON DELETE RESTRICT,
    CONSTRAINT pizza_pizza_base FOREIGN KEY (pizza_base)
-    REFERENCES pizza_base (name)
+    REFERENCES pizza_base (id)
     ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
