@@ -2,7 +2,7 @@ import Knex from "knex";
 import {ILogger} from "oddlog";
 import * as util from "util";
 
-import * as types from "../../../types"
+import * as types from "../../types"
 
 import {ISqlConfig} from "./types";
 
