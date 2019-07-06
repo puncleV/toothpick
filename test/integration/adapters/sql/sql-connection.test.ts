@@ -1,9 +1,9 @@
 import casual from "casual";
 import {expect} from "chai";
 
-import {database} from "../../../../../configs/config.json";
-import {logger} from "../../../../../src/logger";
-import {sql} from "../../../../../src/repositories";
+import {database} from "../../../../configs/config.json";
+import {logger} from "../../../../src/logger";
+import {sql} from "../../../../src/repositories";
 
 describe.only("SqlConnection", () => {
   describe("integration", () => {
