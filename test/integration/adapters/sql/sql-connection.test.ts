@@ -3,9 +3,9 @@ import {expect} from "chai";
 
 import {database} from "../../../../configs/config.json";
 import {logger} from "../../../../src/logger";
-import {sql} from "../../../../src/repositories";
+import {sql} from "../../../../src/adapters";
 
-describe.only("SqlConnection", () => {
+describe("SqlConnection", () => {
   describe("integration", () => {
     let sqlBuilder: sql.SqlConnection;
 
