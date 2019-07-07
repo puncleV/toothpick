@@ -20,7 +20,7 @@ describe("BaseRepository", () => {
     ...overrides
   });
 
-  describe.only("integration", () => {
+  describe("integration", () => {
     let sqlConnection: sql.SqlConnection;
     let baseRepository: repositories.BaseRepository<ITestType, ITestType>;
     let tableName: string ;
