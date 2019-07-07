@@ -53,6 +53,7 @@ export class CustomerOrderFinder {
     }))
   }
 
+  // todo move it to orderItems, its more like it's responsibility
   private async getPizzaCosts (pizzaOrders: repositories.ICustomerOrderPizza[]): Promise<Map<string, number>> {
     const pizzas = await Promise.all(
       pizzaOrders.map(
