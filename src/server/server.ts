@@ -20,6 +20,7 @@ export const createServer = (container: AwilixContainer) => {
   application.use(requestRouter.routes());
   application.use(requestRouter.allowedMethods());
 
+  // todo use config
   const server = application.listen(1337);
   initShutdownHandler(server);
 
