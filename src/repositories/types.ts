@@ -13,21 +13,10 @@ export interface ICustomer {
   email: string;
 }
 
-export interface IPizzaBase {
-  id: types.UUID;
-  name: string;
-}
-
-export interface IPizzaSize {
-  id: types.UUID;
-  name: string;
-}
-
 export interface IPizza {
   id: types.UUID;
   name:  string;
-  size: IPizzaSize["id"];
-  base: IPizzaBase["id"];
+  description: string;
   cost: number;
 }
 
@@ -53,21 +42,10 @@ export interface IRawCustomer {
   email: string;
 }
 
-export interface IRawPizzaBase {
-  id: types.UUID;
-  name: string;
-}
-
-export interface IRawPizzaSize {
-  id: types.UUID;
-  name: string;
-}
-
 export interface IRawPizza {
   id: types.UUID;
   name:  string;
-  size: IRawPizzaSize["id"];
-  base: IRawPizzaBase["id"];
+  description: string;
   cost: number;
 }
 

@@ -1,18 +1,6 @@
-CREATE TABLE IF NOT EXISTS pizza_base (
-   id UUID PRIMARY KEY,
-   name VARCHAR(25) UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS pizza_size (
-   id UUID PRIMARY KEY,
-   name VARCHAR(25) UNIQUE
-);
-
 CREATE TABLE IF NOT EXISTS pizza (
    id UUID PRIMARY KEY,
    name VARCHAR(25) NOT NULL,
-   size UUID NOT NULL,
-   base UUID NOT NULL,
    description VARCHAR(255),
    cost int NOT NULL default 0,
    CONSTRAINT pizza_pizza_size FOREIGN KEY (size)

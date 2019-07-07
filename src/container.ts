@@ -13,6 +13,8 @@ export const container = createContainer().register({
 
   customerOrderRepository: asClass(repositories.CustomerOrderRepository),
   customerRepository: asClass(repositories.CustomerRepository),
+  customerOrderPizzaRepository: asClass(repositories.CustomerOrderPizzaRepository),
+
   sqlConnection: asClass(adapters.sql.SqlConnection).inject(() => ({
     config: config.database
   })).singleton(),
