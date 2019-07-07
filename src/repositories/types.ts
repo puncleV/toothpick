@@ -28,6 +28,7 @@ export interface IPizza {
   name:  string;
   size: IPizzaSize["id"];
   base: IPizzaBase["id"];
+  cost: number;
 }
 
 export interface ICustomerOrder {
@@ -67,6 +68,7 @@ export interface IRawPizza {
   name:  string;
   size: IRawPizzaSize["id"];
   base: IRawPizzaBase["id"];
+  cost: number;
 }
 
 export interface IRawCustomerOrder {

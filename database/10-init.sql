@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS pizza (
    size UUID NOT NULL,
    base UUID NOT NULL,
    description VARCHAR(255),
+   cost int NOT NULL default 0,
    CONSTRAINT pizza_pizza_size FOREIGN KEY (size)
     REFERENCES pizza_size (id)
     ON UPDATE CASCADE ON DELETE RESTRICT,
