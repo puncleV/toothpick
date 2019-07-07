@@ -65,7 +65,8 @@ export class CustomerOrderFinder {
     );
 
     return pizzas.reduce((acc, pizza) => {
-      acc.set(pizza.id, pizza.cost)
+      // todo add error just in case
+      acc.set(pizza!.id, pizza!.cost)
       return acc;
     }, new Map<string, number>())
   }
