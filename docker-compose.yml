@@ -1,13 +1,13 @@
 version: "3"
 
 services:
-  rest-api:
-    container_name: toothpick_api
-    build: .
-    ports:
-      - 1338:1338
-    volumes:
-      - ./config:/opt/app/config
+#  rest-api:
+#    container_name: toothpick_api
+#    build: .
+#    ports:
+#      - 1338:1338
+#    volumes:
+#      - ./config:/opt/app/config
   database:
     container_name: toothpick_db
     build: ./database

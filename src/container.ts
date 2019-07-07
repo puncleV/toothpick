@@ -10,6 +10,8 @@ export const container = createContainer().register({
   OrderController: asClass(controllers.OrderController),
 
   customerOrderFinder: asClass(services.CustomerOrderFinder),
+  customerOrderTerminator: asClass(services.CustomerOrderTerminator),
+  orderItems: asClass(services.OrderItems),
 
   customerOrderRepository: asClass(repositories.CustomerOrderRepository),
   customerRepository: asClass(repositories.CustomerRepository),

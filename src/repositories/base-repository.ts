@@ -37,10 +37,10 @@ export class BaseRepository<T extends {id: string}, Q> {
 
     await this.sqlConnection.connection(this.entity).insert(this.getRawEntityFromInternal({...entity, id} as T));
 
-    return await this.findById(id);
+    return await this.findById(id) as T;
   }
 
-  public async find(entity: Partial<T>): Promise<T> {
+  public async find(entity: Partial<T>): Promise<T | null> {
     return this.getInternalEntityFromRaw(
       await this.sqlConnection
         .connection(this.entity)
@@ -64,7 +64,7 @@ export class BaseRepository<T extends {id: string}, Q> {
     return this.findById(id);
   }
 
-  public async findById(id: string): Promise<T> {
+  public async findById(id: string): Promise<T | null> {
     return this.getInternalEntityFromRaw(
       await this.sqlConnection
         .connection(this.entity)
@@ -105,7 +105,11 @@ export class BaseRepository<T extends {id: string}, Q> {
     );
   }
 
-  protected getInternalEntityFromRaw(entity: Partial<Q> | Q): Partial<T> | T {
+  protected getInternalEntityFromRaw(entity: Partial<Q> | Q): Partial<T> | T | null {
+    if (entity == null) {
+      return null
+    }
+
     return this.changeKeysByMap(entity, this.mapToInternalFields);
   }
 
