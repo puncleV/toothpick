@@ -17,7 +17,7 @@ export class CustomerOrderFinder {
   }
 
   public async find(request: IFindCustomerOrderRequest): Promise<repositories.ICustomerOrder[]> {
-    const customer = request.customerEmail !== null ? await this.getCustomer(request.customerEmail!) : null;
+    const customer = request.customerEmail != null ? await this.getCustomer(request.customerEmail!) : null;
 
     const customerOrders = await this.customerOrderRepository.findMany(_.omitBy({
       status: request.status,
