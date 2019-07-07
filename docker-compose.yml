@@ -5,7 +5,7 @@ services:
     container_name: toothpick_api
     build: .
     ports:
-      - 1338:1338
+      - 1337:1337
     volumes:
       - ./config:/opt/app/config
   database:
