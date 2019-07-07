@@ -14,7 +14,18 @@ export const createCustomerRepository = (overrides: Partial<repositories.IBaseRe
   new repositories.CustomerRepository({
     sqlConnection: overrides.sqlConnection || createSqlConnection(),
   });
+
 export const createCustomerOrderRepository = (overrides: Partial<repositories.IBaseRepositoryDependencies> = {}) =>
   new repositories.CustomerOrderRepository({
+    sqlConnection: overrides.sqlConnection || createSqlConnection(),
+  });
+
+export const createCustomerOrderPizzaRepository = (overrides: Partial<repositories.IBaseRepositoryDependencies> = {}) =>
+  new repositories.CustomerOrderPizzaRepository({
+    sqlConnection: overrides.sqlConnection || createSqlConnection(),
+  });
+
+export const createPizzaRepository = (overrides: Partial<repositories.IBaseRepositoryDependencies> = {}) =>
+  new repositories.PizzaRepository({
     sqlConnection: overrides.sqlConnection || createSqlConnection(),
   });

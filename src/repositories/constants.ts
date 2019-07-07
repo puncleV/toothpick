@@ -3,21 +3,17 @@ import {
   ICustomerOrder,
   ICustomerOrderPizza,
   IPizza,
-  IPizzaBase,
-  IPizzaSize,
   IRawCustomer,
   IRawCustomerOrder,
   IRawCustomerOrderPizza,
   IRawPizza,
-  IRawPizzaBase,
-  IRawPizzaSize,
 } from "./types";
 
 export const PizzaFieldsMap = new Map<keyof IPizza, keyof IRawPizza>([
   ["id", "id"],
   ["name", "name"],
-  ["size", "size"],
-  ["base", "base"],
+  ["description", "description"],
+  ["cost", "cost"],
 ]);
 export const CustomerOrderFieldsMap = new Map<keyof ICustomerOrder, keyof IRawCustomerOrder>([
   ["id", "id"],
@@ -38,7 +34,3 @@ export const CustomerFieldsMap = new Map<keyof ICustomer, keyof IRawCustomer>([
   ["name", "name"],
   ["email", "email"],
 ]);
-
-export const PizzaSizeFieldsMap = new Map<keyof IPizzaSize, keyof IRawPizzaSize>([["id", "id"], ["name", "name"]]);
-
-export const PizzaBaseFieldsMap = new Map<keyof IPizzaBase, keyof IRawPizzaBase>([["id", "id"], ["name", "name"]]);

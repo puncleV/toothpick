@@ -3,14 +3,26 @@ import {expect, request} from "chai";
 import _ from "lodash";
 
 import {server} from "../../../src/api";
-import {CustomerOrderStatus} from "../../../src/repositories";
-import {createCustomerOrderRepository, createCustomerRepository} from "../component-creators";
+import * as repositories from "../../../src/repositories";
+import {
+  createCustomerOrderPizzaRepository,
+  createCustomerOrderRepository,
+  createCustomerRepository,
+} from "../component-creators";
+import {createPizza} from "../entity-creators";
 
 describe("OrderContorller", () => {
-  it("get by email", async () => {
-    const customerRepository = createCustomerRepository();
-    const customerOrderRepository = createCustomerOrderRepository();
+  let customerRepository: repositories.CustomerRepository;
+  let customerOrderRepository: repositories.CustomerOrderRepository;
+  let customerOrderPizzaRepository: repositories.CustomerOrderPizzaRepository;
 
+  before(() => {
+    customerRepository = createCustomerRepository();
+    customerOrderRepository = createCustomerOrderRepository();
+    customerOrderPizzaRepository = createCustomerOrderPizzaRepository();
+  });
+
+  it("get by customerId", async () => {
     const customer = await customerRepository.create({
       name: casual.first_name,
       email: casual.email,
@@ -23,44 +35,33 @@ describe("OrderContorller", () => {
 
     await customerOrderRepository.create({
       customerId: customer2.id,
-      status: casual.random_value(CustomerOrderStatus),
+      status: casual.random_value(repositories.CustomerOrderStatus),
       created: new Date().toUTCString(),
     });
 
-
     const order1 = await customerOrderRepository.create({
       customerId: customer.id,
-      status: casual.random_value(CustomerOrderStatus),
+      status: casual.random_value(repositories.CustomerOrderStatus),
       created: new Date().toUTCString(),
     });
 
     const order2 = await customerOrderRepository.create({
       customerId: customer.id,
-      status: casual.random_value(CustomerOrderStatus),
+      status: casual.random_value(repositories.CustomerOrderStatus),
       created: new Date().toUTCString(),
     });
 
-    const response = await request(server).get(`/orders?customerEmail=${customer.email}`);
+    const response = await request(server).get(`/orders?customerId=${customer.id}`);
 
     expect(response).to.have.status(200);
-    expect(response.body, "should return all orders for customer with passed email").to.eql(
-      [order1, order2].map((order) =>
-        _.omit(
-          {
-            ...order,
-            customer,
-            created: new Date(order.created).toISOString()
-          },
-          "customerId",
-        ),
-      ),
-    );
+    expect(
+      (response.body as any[]).map((order) => order.id),
+      "should return all orders for customer with passed email",
+    ).to.eql([order1, order2].map((order) => order.id));
   });
 
   it("get by status", async () => {
-    const customerRepository = createCustomerRepository();
-    const customerOrderRepository = createCustomerOrderRepository();
-    const status = casual.random_value(CustomerOrderStatus);
+    const status = casual.random_value(repositories.CustomerOrderStatus);
     const customer = await customerRepository.create({
       name: casual.first_name,
       email: casual.email,
@@ -68,7 +69,7 @@ describe("OrderContorller", () => {
 
     await customerOrderRepository.create({
       customerId: customer.id,
-      status: casual.random_value(_.difference(Object.values(CustomerOrderStatus), [status])),
+      status: casual.random_value(_.difference(Object.values(repositories.CustomerOrderStatus), [status])),
       created: new Date().toUTCString(),
     });
 
@@ -87,62 +88,58 @@ describe("OrderContorller", () => {
     const response = await request(server).get(`/orders?status=${status}`);
 
     expect(response).to.have.status(200);
-    expect(response.body, "should return all orders for customer with passed email").to.eql(
-      [order1, order2].map((order) =>
-        _.omit(
-          {
-            ...order,
-            customer,
-            created: new Date(order.created).toISOString()
-          },
-          "customerId",
-        ),
-      ),
-    );
+    expect(
+      (response.body as any[]).map((order) => order.id),
+      "should return all orders for customer with passed email",
+    ).to.eql([order1, order2].map((order) => order.id));
   });
 
   it("get all orders", async () => {
-    const customerRepository = createCustomerRepository();
-    const customerOrderRepository = createCustomerOrderRepository();
-
+    const pizza = await createPizza();
+    const pizza2 = await createPizza();
     const customer1 = await customerRepository.create({
-      name: casual.first_name,
-      email: casual.email,
-    });
-
-    const customer2 = await customerRepository.create({
       name: casual.first_name,
       email: casual.email,
     });
 
     const order1 = await customerOrderRepository.create({
       customerId: customer1.id,
-      status: casual.random_value(CustomerOrderStatus),
+      status: casual.random_value(repositories.CustomerOrderStatus),
       created: new Date().toUTCString(),
     });
 
-    const order2 = await customerOrderRepository.create({
-      customerId: customer2.id,
-      status: casual.random_value(CustomerOrderStatus),
-      created: new Date().toUTCString(),
+    const customerOrderPizza1 = await customerOrderPizzaRepository.create({
+      customerOrderId: order1.id,
+      pizzaId: pizza.id,
+      count: casual.integer(1, 100),
+    });
+
+    const customerOrderPizza2 = await customerOrderPizzaRepository.create({
+      customerOrderId: order1.id,
+      pizzaId: pizza2.id,
+      count: casual.integer(1, 100),
     });
 
     const response = await request(server).get(`/orders`);
 
     expect(response).to.have.status(200);
-    expect(response.body, "should return all orders").to.eql(
-      [order1, order2].map((order) =>
-        _.omit(
-          {
-            ...order,
-            customer: order.customerId === customer1.id ? customer1 : customer2,
-            created: new Date(order.created).toISOString()
-          },
-          "customerId",
-        ),
-      ),
-    );
+    expect(response.body, "should count all pizzas costs").to.eql([{
+      ...order1,
+      created: new Date(order1.created).toISOString(),
+      pizzas: [
+        {
+          count: customerOrderPizza1.count,
+          id: customerOrderPizza1.pizzaId,
+          cost: customerOrderPizza1.count * pizza.cost,
+        },
+        {
+          count: customerOrderPizza2.count,
+          id: customerOrderPizza2.pizzaId,
+          cost: customerOrderPizza2.count * pizza2.cost,
+        },
+      ],
+    }]);
   });
 
-  // todo add get by both filtes
+  // todo add get by both filters
 });
