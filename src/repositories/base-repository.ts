@@ -7,6 +7,7 @@ export interface IBaseRepositoryDependencies {
   sqlConnection: sql.SqlConnection;
 }
 
+// T - internal type, Q - type as it is in database
 export interface IBaseRepositoryParams<T, Q> {
   entity: string;
   mapToRawFields: Map<keyof T, keyof Q>;
