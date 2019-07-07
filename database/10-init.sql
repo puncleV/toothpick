@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS customer_order (
    id UUID PRIMARY KEY,
    status VARCHAR(25) NOT NULL,
    created timestamp NOT NULL,
-   delivered timestamp NOT NULL,
+   delivered timestamp,
    customer_id UUID NOT NULL,
    CONSTRAINT customer_order_customer_id FOREIGN KEY (customer_id)
     REFERENCES customer (id)

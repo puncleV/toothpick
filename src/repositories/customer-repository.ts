@@ -9,4 +9,8 @@ export class CustomerRepository extends BaseRepository <ICustomer, IRawCustomer>
       mapToRawFields: CustomerFieldsMap
     });
   }
+
+  public async findByEmail(email: string) {
+    return this.find({email});
+  }
 }

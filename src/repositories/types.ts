@@ -34,7 +34,7 @@ export interface ICustomerOrder {
   id: types.UUID;
   status: CustomerOrderStatus;
   created: types.ISO_DATE;
-  delivered: types.ISO_DATE;
+  delivered?: types.ISO_DATE;
   customerId: ICustomer["id"];
 }
 
