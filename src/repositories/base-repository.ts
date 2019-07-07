@@ -73,6 +73,20 @@ export class BaseRepository<T extends {id: string}, Q> {
     ) as T;
   }
 
+  public async deleteById (id: string): Promise<void> {
+    return await this.sqlConnection
+      .connection(this.entity)
+      .where({id})
+      .del()
+  }
+
+  public async delete(entity: Partial<T>): Promise<void> {
+    return await this.sqlConnection
+        .connection(this.entity)
+        .where(this.getRawEntityFromInternal(entity))
+        .del()
+  }
+
   // todo this is not the best place for this generic method
   protected changeKeysByMap<X, Y>(entity: Partial<X>, map: Map<keyof X, keyof Y>): Partial<Y> {
     return Object.entries(entity).reduce(

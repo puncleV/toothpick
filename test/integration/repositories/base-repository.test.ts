@@ -153,6 +153,34 @@ describe("BaseRepository", () => {
       })
     })
 
+    describe("delete", () => {
+      it("delete row", async () => {
+        const entity: ITestType = createTestTypeData();
+
+        await sqlConnection.connection(tableName).insert(entity);
+
+        await baseRepository.delete(entity);
+
+        const entityRow = await sqlConnection.connection(tableName).where({id: entity.id}).first();
+
+        expect(entityRow, "should update row").to.eql(undefined);
+      })
+    })
+
+    describe("deleteById", () => {
+      it("delete row", async () => {
+        const entity: ITestType = createTestTypeData();
+
+        await sqlConnection.connection(tableName).insert(entity);
+
+        await baseRepository.deleteById(entity.id);
+
+        const entityRow = await sqlConnection.connection(tableName).where({id: entity.id}).first();
+
+        expect(entityRow, "should update row").to.eql(undefined);
+      })
+    })
+
     it("fields mapping", async () => {
       baseRepository = new repositories.BaseRepository<ITestType, ITestType>({
         sqlConnection
