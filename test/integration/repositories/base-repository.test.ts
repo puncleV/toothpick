@@ -20,9 +20,9 @@ describe("BaseRepository", () => {
     ...overrides
   });
 
-  describe("integration", () => {
+  describe.only("integration", () => {
     let sqlConnection: sql.SqlConnection;
-    let baseRepository: repositories.BaseRepository<ITestType>;
+    let baseRepository: repositories.BaseRepository<ITestType, ITestType>;
     let tableName: string ;
 
     beforeEach(async () => {
@@ -35,9 +35,16 @@ describe("BaseRepository", () => {
         table.string("field2", 50);
       });
 
-      baseRepository = new repositories.BaseRepository<ITestType>({
+      baseRepository = new repositories.BaseRepository<ITestType, ITestType>({
         sqlConnection
-      }, tableName);
+      }, {
+        entity: tableName,
+        mapToRawFields: new Map<keyof ITestType, keyof ITestType>([
+          ["id", "id"],
+          ["field1", "field1"],
+          ["field2", "field2"],
+        ])
+      });
     });
 
     afterEach(async () => {
@@ -144,6 +151,26 @@ describe("BaseRepository", () => {
           [updateKey]: updateValue,
         });
       })
+    })
+
+    it("fields mapping", async () => {
+      baseRepository = new repositories.BaseRepository<ITestType, ITestType>({
+        sqlConnection
+      }, {
+        entity: tableName,
+        mapToRawFields: new Map<keyof ITestType, keyof ITestType>([
+          ["id", "id"],
+          ["field1", "field1"],
+        ])
+      });
+      const entity: ITestType = createTestTypeData();
+
+      try {
+        await baseRepository.create(entity);
+      } catch (e) {
+        // todo add special Error type and check only instanceof instead of hardcoded string
+        expect(e).to.be.instanceof(Error).with.property("message", `mapping for ${tableName} field2 was not find`)
+      }
     })
   });
 });

@@ -7,13 +7,20 @@ export interface IBaseRepositoryDependencies {
   sqlConnection: sql.SqlConnection;
 }
 
-export class BaseRepository <T extends {id: string}> {
+export interface IBaseRepositoryParams<T, Q> {
+  entity: string;
+  mapToRawFields: Map<keyof T, keyof Q>,
+}
+
+export class BaseRepository <T extends {id: string}, Q> {
   protected sqlConnection: sql.SqlConnection;
   protected entity: string;
+  protected mapToBaseFields: Map<keyof T, keyof Q>;
 
-  constructor(dependencies: IBaseRepositoryDependencies, entity: string) {
+  constructor(dependencies: IBaseRepositoryDependencies, params: IBaseRepositoryParams<T, Q>) {
     this.sqlConnection = dependencies.sqlConnection;
-    this.entity = entity;
+    this.entity = params.entity;
+    this.mapToBaseFields = params.mapToRawFields;
   }
 
   public async create(entity: types.Omit<T, "id">): Promise<T> {
@@ -43,5 +50,19 @@ export class BaseRepository <T extends {id: string}> {
 
   public async findById (id: string) : Promise<T> {
     return await this.sqlConnection.connection(this.entity).where({id}).first();
+  }
+
+  protected transformEntityToRaw (entity: T, map: Map<keyof T, keyof Q>): Q {
+    return Object.entries(entity).reduce((acc, [key, value]) => {
+      const rawFieldName = map.get(key as keyof T) as keyof Q;
+
+      if (rawFieldName == null) {
+        throw new Error(`mapping for ${this.entity} ${key} was not find`)
+      }
+
+      acc[rawFieldName] = value;
+
+      return acc;
+    }, {} as Record<keyof Q, any>);
   }
 }

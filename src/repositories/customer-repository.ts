@@ -1,8 +1,12 @@
 import {BaseRepository, IBaseRepositoryDependencies} from "./base-repository";
-import {ICustomer} from "./types";
+import {CustomerFieldsMap} from "./constants";
+import {ICustomer, IRawCustomer} from "./types";
 
-export class CustomerRepository extends BaseRepository <ICustomer> {
+export class CustomerRepository extends BaseRepository <ICustomer, IRawCustomer> {
   constructor (dependencies: IBaseRepositoryDependencies) {
-    super(dependencies, "customer");
+    super(dependencies, {
+      entity: "customer",
+      mapToRawFields: CustomerFieldsMap
+    });
   }
 }

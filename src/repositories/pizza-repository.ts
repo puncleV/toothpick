@@ -1,8 +1,12 @@
 import {BaseRepository, IBaseRepositoryDependencies} from "./base-repository";
-import {IPizza} from "./types";
+import {PizzaFieldsMap} from "./constants";
+import {IPizza, IRawPizza} from "./types";
 
-export class PizzaRepository extends BaseRepository <IPizza> {
-  constructor (dependencies: IBaseRepositoryDependencies) {
-    super(dependencies, "pizza");
+export class PizzaRepository extends BaseRepository<IPizza, IRawPizza> {
+  constructor(dependencies: IBaseRepositoryDependencies) {
+    super(dependencies, {
+      entity: "pizza",
+      mapToRawFields: PizzaFieldsMap,
+    });
   }
 }
