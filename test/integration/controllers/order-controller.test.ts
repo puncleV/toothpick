@@ -222,7 +222,7 @@ describe("OrderContorller", () => {
       const response = await request(server).del(`/orders/${order.id}`);
 
       expect(response).to.have.status(500);
-      expect(response.body).to.have.property("message", "Cant cancel order in transit status");
+      expect(response.body).to.have.property("message", `Cant cancel order in ${order.status} status`);
     });
   });
 });
